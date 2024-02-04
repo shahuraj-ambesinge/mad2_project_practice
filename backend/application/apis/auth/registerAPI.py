@@ -9,8 +9,8 @@ user_post_args = reqparse.RequestParser()
 user_post_args.add_argument('u_mail', type = str, required = True, help = 'user mail is required !!')
 user_post_args.add_argument('password', type = str, required = True, help = 'password is required to register new user !!')
 
-class RegisterAPI():
-    def post(resource):
+class RegisterAPI(Resource):
+    def post(self):
         args = user_post_args.parse_args()
         u_mail = args.get('u_mail')
         password = args.get('password')

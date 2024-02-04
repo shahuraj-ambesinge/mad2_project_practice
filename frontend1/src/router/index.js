@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path:"/register",
+        path:"",
         name:"Registration-Page",
         component: RegisterView,
     }

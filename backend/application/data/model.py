@@ -23,13 +23,14 @@ class User(db.Model, UserMixin):
     u_mail = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     fs_uniquifier = db.Column(db.String(300), unique=True, nullable=False)
+    active = db.Column(db.Boolean, default=True)
 
     roles = db.relationship('UserRole', back_populates='user')
 
-    def __init__(self, u_mail, password, fs_uniquifier):
-        self.u_mail = u_mail
-        self.password = password
-        self.fs_uniquifier = fs_uniquifier
+    # def __init__(self, u_mail, password, fs_uniquifier):
+    #     self.u_mail = u_mail
+    #     self.password = password
+    #     self.fs_uniquifier = fs_uniquifier
         
 
 class Book(db.Model):

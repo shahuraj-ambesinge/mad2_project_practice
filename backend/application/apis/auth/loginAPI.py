@@ -23,14 +23,14 @@ class loginAPI(Resource):
         if user is None:
             return jsonify({'status': 'failed', 'message': "This email is not Registered"})
         
-        if verify_password(password, user.password):
+        if verify_password(user.password, password):
             return jsonify({'status': 'failed', 'message': "This password is wrong"})
         refresh_token = create_refresh_token(identity=user.user_id)
         access_token = create_access_token(identity=user.user_id)
 
         login_user(user)
 
-        return({'status': 'failed', 'message': "This is user loged in successfully", 'access_token':access_token, 'refresh_token':refresh_token})
+        return({'status': 'success', 'message': "This is user loged in successfully", 'access_token':access_token, 'refresh_token':refresh_token})
 
 
 class RefreshTokenAPI(Resource):
