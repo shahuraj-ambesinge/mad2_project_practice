@@ -1,6 +1,6 @@
 <template>
     <div>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Kanban</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -11,19 +11,23 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <router-link to="/login"><a class="nav-link active" aria-current="page" href="#">Login</a></router-link>
+                            <router-link to="/register"><a class="nav-link active" aria-current="page" href="#">Register</a></router-link>
                         </li>
+
+
                     </ul>
+
                 </div>
             </div>
         </nav>
-        <div class="container text-center flex">
-            <div class="row mt-5">
+        <div class="container text-center flex mt-5">
+            <div class="row">
                 <div class="col-3">
                 </div>
+
                 <div class="col-4">
-                    <h2>Registration Form</h2>
-                    <form>
+                    <h2>Login Form</h2>
+                    <form @submit.prevent>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -34,16 +38,11 @@
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Re-Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" v-model="re_password">
-                        </div>
-                        <button type="button" class="btn btn-primary" @click="registerUser()">Register</button>
+                        <button type="button" class="btn btn-primary" @click="loginUser()">Login</button>
                     </form>
                 </div>
                 <div class="col-3">
-<user-header :mail="u_mail"></user-header>
-<user-header :pass="password"></user-header>
+
                 </div>
             </div>
         </div>
@@ -51,12 +50,11 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import UserHeader from '@/components/UserHeader.vue';
+import axios from 'axios';
 
 
 export default {
-    name: "RegisterUserView",
+    name: "LoginUserView",
     data() {
         return {
             u_mail: "",
@@ -65,45 +63,49 @@ export default {
         }
     },
     methods: {
-        registerUser() {
-            if (!this.u_mail || !this.password || !this.re_password) {
-                alert("All fields Required !!");
+        loginUser() {
+
+            if (!this.u_mail || !this.password) {
+                alert("All fields Required !!")
                 return;
             }
             if (!this.u_mail.includes("@") || !this.u_mail.endsWith(".com")) {
                 alert("Invalid email format !! Email must include '@' and end with '.com'");
                 return;
             }
-            if (this.password != this.re_password) {
-                alert("Passwords don't match !!");
-                return;
-            }
 
-            axios.post('http://127.0.0.1:8081/api/register', {
+            axios.post('http://127.0.0.1:8081/api/login', {
                 u_mail: this.u_mail,
                 password: this.password,
             })
                 .then((response) => {
                     if (response.data.status === "success") {
-                        alert("Successfully Registered !!")
-                        this.$router.push("/login");
+                        const access_token = response.data.access_token;
+                        const refresh_token = response.data.refresh_token;
+                        const u_mail = response.data.u_mail;
+
+                        console.log(u_mail)
+                        console.log(access_token)
+                        console.log(refresh_token)
+                        localStorage.setItem("access_token", access_token);
+                        localStorage.setItem("refresh_token", refresh_token);
+                        localStorage.setItem("user_mail", u_mail);
+                        
+                        this.$router.push("/home");
+                        return;
                     }
                     if (response.data.status === "failed") {
-                        alert("User Already Exist.!!")
-                        this.$router.push("/login");
+                        alert(response.data.message)
                     }
                 })
                 .catch((error) => {
                     console.error(error);
                     alert("An error occurred while registering the user");
                 });
+
         }
-    },
-    components:{
-      'user-header': UserHeader,
     }
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
