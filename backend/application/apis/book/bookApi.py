@@ -31,8 +31,11 @@ resource_fields = {
 class AllBookAPI(Resource):
     @marshal_with(resource_fields)
     def get(resources):
-        book = Book.query.all()
-        return book
+        books = Book.query.all()
+        book_list = []
+        for book in books:
+            book_list.append({'book_id' : book.book_id, 'book_name' : book.book_name, 'book_author' : book.book_author})
+        return book_list
 
     @marshal_with(resource_fields)
     def post(resources):

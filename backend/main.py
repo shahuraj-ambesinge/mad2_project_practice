@@ -17,6 +17,8 @@ from application.apis.book.bookApi import BookAPI
 from application.apis.auth.loginAPI import loginAPI
 from application.apis.auth.registerAPI import RegisterAPI
 from application.apis.auth.loginAPI import RefreshTokenAPI
+from application.apis.list.listAPI import AllTheaterAPI
+from application.apis.list.listAPI import ListAPI
 
 
 
@@ -67,8 +69,8 @@ api.add_resource(loginAPI, "/api/login")  #api for user log in
 
 api.add_resource(RefreshTokenAPI, "/api/refresh_token") # api for to ensure that only requests with a valid refresh token can access this endpoint
 
-print("Hello")
-
+api.add_resource(AllTheaterAPI, "/api/list")
+api.add_resource(ListAPI, "/api/list/<int:list_id>")
 #def new_librarian():
 
 with app.app_context():

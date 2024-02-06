@@ -31,7 +31,14 @@ class User(db.Model, UserMixin):
     #     self.u_mail = u_mail
     #     self.password = password
     #     self.fs_uniquifier = fs_uniquifier
-        
+
+class List(db.Model):
+    __tablename__ = "list"
+    list_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    User_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    list_name = db.Column(db.String(20))
+    list_disc = db.Column(db.String(200))
+
 
 class Book(db.Model):
     __tablename__ = "book"
