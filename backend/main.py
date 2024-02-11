@@ -21,12 +21,12 @@ from application.apis.list.listAPI import AllTheaterAPI
 from application.apis.list.listAPI import ListAPI
 
 
-
+#create flask application instance
 app = Flask(__name__, template_folder= './templates')
 app.config.from_object(config)
 app.app_context().push()
 
-#intitialize flask CORS
+#intitialize flask CORS to retsrict requests
 CORS(app, supports_credentials=True)
 
 #CORS headers help to prevent unauthorized cross-origin requests and enhance the security of web applications. 

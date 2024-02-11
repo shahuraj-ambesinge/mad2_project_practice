@@ -1,11 +1,12 @@
 from .database import db
 from flask_security import UserMixin
 
+
+
 class Role(db.Model):
     __tablename__ = "role"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
-
     users = db.relationship('UserRole', back_populates='role')
 
 class UserRole(db.Model):

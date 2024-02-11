@@ -16,7 +16,7 @@ list_post_args.add_argument('list_name', type=str)
 list_post_args.add_argument('list_disc', type=str)
 
 class AllTheaterAPI(Resource):
-    @marshal_with(resource_field)
+    @jwt_required()
     def get(resources):
         lists = List.query.all()
         list_dict = []
@@ -24,7 +24,7 @@ class AllTheaterAPI(Resource):
             list_dict.append({'list_id' : list.list_id, 'list_name' : list.list_name, 'list_disc' : list.list_disc})
         return list_dict
   
-    @marshal_with(resource_field)
+    @jwt_required()
     def post(resources):
         args = list_post_args.parse_args()
         list =List.query.filter_by(list_name = args['list_name']).first()
@@ -36,14 +36,14 @@ class AllTheaterAPI(Resource):
         return input, 201
 
 class ListAPI(Resource):
-    @marshal_with(resource_field)
+    @jwt_required()
     def get(self, list_id):
         list = List.query.filter_by(list_id = list_id).first()
         if not list:
             abort(404,message="There is no list with list_id:" +str(list_id))
         return list
     
-    @marshal_with(resource_field)
+    @jwt_required()
     def put(self, list_id):
         args = list_post_args.parse_args()
         list = List.query.filter_by(list_id = list_id).first()
@@ -59,7 +59,7 @@ class ListAPI(Resource):
         db.session.commit()
         return jsonify({'status':'success', 'message':"list is updated"})
     
-    @marshal_with(resource_field)
+    @jwt_required()
     def delete(self, list_id):
         delete_list = List.query.filter_by(list_id = list_id).first()
         if delete_list:

@@ -1,5 +1,4 @@
-import json
-from flask import request, jsonify
+from flask import jsonify
 from flask_restful import Resource, reqparse, abort, fields, marshal_with
 
 from application.data.model import db, Book
@@ -25,7 +24,6 @@ resource_fields = {
     'pages_in_book': fields.Integer,
     'price': fields.Integer,
 }
-
 
 
 class AllBookAPI(Resource):

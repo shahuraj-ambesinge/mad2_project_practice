@@ -27,7 +27,7 @@
 
                 <div class="col-4">
                     <h2>Login Form</h2>
-                    <form @submit.prevent>
+                    <form>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -90,8 +90,9 @@ export default {
                         localStorage.setItem("access_token", access_token);
                         localStorage.setItem("refresh_token", refresh_token);
                         localStorage.setItem("user_mail", u_mail);
+                        console.log(u_mail)
                         
-                        this.$router.push("/home");
+                        this.$router.push("/");
                         return;
                     }
                     if (response.data.status === "failed") {

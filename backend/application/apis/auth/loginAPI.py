@@ -28,9 +28,11 @@ class loginAPI(Resource):
         refresh_token = create_refresh_token(identity=user.user_id)
         access_token = create_access_token(identity=user.user_id)
 
+        # log in a user by starting a user session
         login_user(user)
+        print(user)
 
-        return({'status': 'success', 'message': "This is user loged in successfully", 'access_token':access_token, 'refresh_token':refresh_token})
+        return({'status': 'success', 'message': "This is user loged in successfully", 'access_token':access_token, 'refresh_token':refresh_token, 'u_mail':u_mail})
 
 
 class RefreshTokenAPI(Resource):

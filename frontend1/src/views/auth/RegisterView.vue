@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Re-Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" v-model="re_password">
+                            <input type="password" class="form-control" id="exampleInputPassword2" v-model="re_password">
                         </div>
                         <button type="button" class="btn btn-primary" @click="registerUser()">Register</button>
                     </form>
@@ -100,7 +100,7 @@ export default {
         }
     },
     components:{
-      'user-header': UserHeader,
+      'user-header': UserHeader
     }
 }
 </script>
